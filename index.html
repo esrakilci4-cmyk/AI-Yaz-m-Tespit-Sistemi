@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEKNOFEST AI Yazım Tespit Sistemi</title>
+<style>
+    body{
+        font-family: Calibri, sans-serif;
+        background: linear-gradient(135deg, #4b1d6b, #1a0f3c, #4b1d6b);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        margin:0;
+        color:#fff;
+    }
+
+    @keyframes gradientBG{
+        0%{background-position:0% 50%;}
+        50%{background-position:100% 50%;}
+        100%{background-position:0% 50%;}
+    }
+
+    .container{
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 20px;
+    }
+
+    h1{
+        text-align:center;
+        margin-bottom:30px;
+        font-size:36px;
+        text-shadow: 2px 2px 4px #000;
+    }
+
+    .card{
+        backdrop-filter: blur(12px);
+        background: rgba(255,255,255,0.1);
+        border-radius: 20px;
+        padding:20px;
+        margin-bottom:30px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .result-container{
+        display:flex;
+        justify-content:center;
+        gap:40px;
+        margin-top:20px;
+        flex-wrap:wrap;
+    }
+
+    .chart, .yorum{
+        width:400px;
+    }
+
+    .yorum{
+        font-size:24px;
+        font-weight:500;
+    }
+
+    button{
+        padding:12px 25px;
+        border:none;
+        border-radius:12px;
+        background: linear-gradient(135deg,#ff6ec4,#7873f5);
+        color:#fff;
+        font-size:18px;
+        cursor:pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    button:hover{
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .analysis{
+        display:flex;
+        flex-wrap:wrap;
+        gap:20px;
+        justify-content:center;
+    }
+
+    .analysis .item{
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+        padding:15px 20px;
+        border-radius:15px;
+        min-width:180px;
+        text-align:center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .analysis .item h3{
+        margin:0 0 10px 0;
+        font-size:18px;
+    }
+
+    footer{
+        text-align:center;
+        margin-top:50px;
+        font-size:14px;
+        color:#ccc;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+
+    <h1>AI Yazım Tespit Sistemi</h1>
+
+    <!-- FORM -->
+    <div class="card">
+        <form method="POST">
+            <textarea name="text" rows="6" style="width:100%; border-radius:12px; padding:10px; font-size:16px;" placeholder="Metni buraya yapıştırın...">{{ request.form.text }}</textarea>
+            <div style="text-align:center; margin-top:15px;">
+                <button type="submit">Analiz Et</button>
+            </div>
+        </form>
+    </div>
+
+    {% if human is not none and ai is not none %}
+    <!-- SONUÇ KARTI -->
+    <div class="card">
+        <h2>📊 Grafik ve 🧠 AI Analizi</h2>
+        <div class="result-container">
+            <div class="chart">
+                İnsan: {{ human }}%<br>
+                Yapay Zeka: {{ ai }}%
+            </div>
+            <div class="yorum">
+                {{ comment|safe }}
+            </div>
+        </div>
+    </div>
+
+    <!-- DİL ANALİZİ -->
+    <div class="card">
+        <h2>📑 Dil Analizi</h2>
+        <div class="analysis">
+            <div class="item"><h3>Kelime Sayısı</h3>{{ human + ai | round(0) }} </div>
+            <div class="item"><h3>Cümle Sayısı</h3>Orta</div>
+            <div class="item"><h3>Ortalama Kelime Uzunluğu</h3>Orta</div>
+            <div class="item"><h3>Ortalama Cümle Uzunluğu</h3>Orta</div>
+            <div class="item"><h3>Kelime Çeşitliliği</h3>Yüksek</div>
+            <div class="item"><h3>Bağlaç Kullanımı</h3>Orta</div>
+            <div class="item"><h3>Noktalama Yoğunluğu</h3>Doğal</div>
+            <div class="item"><h3>Tekrar Oranı</h3>Düşük</div>
+            <div class="item"><h3>Akademik Kelime Yoğunluğu</h3>Orta</div>
+            <div class="item"><h3>Okunabilirlik Skoru</h3>Yüksek</div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+<footer>
+    © 2026 TEKNOFEST Web Tasarım Projesi
+</footer>
+
+</body>
+</html>
